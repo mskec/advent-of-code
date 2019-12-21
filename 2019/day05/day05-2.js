@@ -1,4 +1,4 @@
-// https://adventofcode.com/2019/day/5
+// https://adventofcode.com/2019/day/5#part2
 
 const path = require('path');
 const fs = require('fs');
@@ -52,7 +52,7 @@ function compute(cntx) {
 
     __DEBUG__ && console.log('DEBUG', `opCode (${opCode}), paramModes (${paramModes})`);
 
-    if (![1, 2, 3, 4].includes(opCode)) {
+    if (![1, 2, 3, 4, 5, 6, 7, 8].includes(opCode)) {
       throw new Error(`Invalid opcode ${opCode} at program position ${cntx.pointer}`);
     }
 
@@ -90,6 +90,26 @@ function compute(cntx) {
       const output = cntx.mem[cntx.mem[cntx.pointer + 1]];
       console.log(output);
       cntx.pointer += 2;
+    } else if (opCode === 5) {
+      // jump-if-true 1005,1,10 -> sets points to 10
+      const param = getParam(cntx, 1, paramModes[0]);
+      cntx.pointer = param !== 0 ? getParam(cntx, 2, paramModes[1]) : cntx.pointer + 3;
+    } else if (opCode === 6) {
+      // jump-if-false 1006,0,10 -> sets pointer to 10
+      const param = getParam(cntx, 1, paramModes[0]);
+      cntx.pointer = param === 0 ? getParam(cntx, 2, paramModes[1]) : cntx.pointer + 3;
+    } else if (opCode === 7) {
+      // less than
+      const firstParam = getParam(cntx, 1, paramModes[0]);
+      const secondParam = getParam(cntx, 2, paramModes[1]);
+      cntx.mem[cntx.mem[cntx.pointer + 3]] = firstParam < secondParam ? 1 : 0;
+      cntx.pointer += 4;
+    } else if (opCode === 8) {
+      // equals
+      const firstParam = getParam(cntx, 1, paramModes[0]);
+      const secondParam = getParam(cntx, 2, paramModes[1]);
+      cntx.mem[cntx.mem[cntx.pointer + 3]] = firstParam === secondParam ? 1 : 0;
+      cntx.pointer += 4;
     }
   }
 }
