@@ -28,7 +28,7 @@ function run(input) {
   let maxVisible = 0;
   let pos;
   for (let x = 0; x < map.length; x++) {
-    for (let y = 0; y < map.length; y++) {
+    for (let y = 0; y < map[x].length; y++) {
       if (visibilityMap[x][y] > maxVisible) {
         maxVisible = visibilityMap[x][y];
         pos = { x, y };
@@ -37,7 +37,7 @@ function run(input) {
   }
 
   console.log(visibilityMap);
-  console.log('The best position', pos, maxVisible);
+  console.log('The best position', pos, maxVisible); // (20, 23), 334
 }
 
 /**
@@ -47,7 +47,7 @@ function run(input) {
 function findVisible(map, pos) {
   const angles = {};
   for (let x = 0; x < map.length; x++) {
-    for (let y = 0; y < map.length; y++) {
+    for (let y = 0; y < map[x].length; y++) {
       if (x === pos.x && y === pos.y) {
         // skip the same pos
         continue;
