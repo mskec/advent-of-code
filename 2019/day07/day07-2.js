@@ -2,15 +2,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const readline = require('readline');
 const permutation = require('../../utils/permutation');
 const intcode = require('./IntcodeComputer');
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-rl.close();
 
 __DEBUG__ = !!process.env.DEBUG;
 
