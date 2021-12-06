@@ -1,4 +1,4 @@
-// https://adventofcode.com/2019/day/X
+// https://adventofcode.com/2021/day/X
 
 const path = require('path');
 const fs = require('fs');
