@@ -1,4 +1,4 @@
-// https://adventofcode.com/2021/day/5
+// https://adventofcode.com/2021/day/5#part2
 
 const path = require('path');
 const fs = require('fs');
@@ -21,8 +21,7 @@ run(
 function run(input) {
   // type Line = [Point, Point]
   // type Lines = Line[]
-  let lines = input.split('\n')
-    .map(convertPoints);
+  let lines = input.split('\n').map(convertPoints);
 
   // determine the size of a map
   let maxX = 0;
@@ -41,11 +40,6 @@ function run(input) {
       maxY = p2.y;
     }
   });
-
-  // console.log('map size:', { maxX, maxY });
-
-  // filter-out diagonal lines
-  lines = lines.filter(line => !isDiagonal(line));
 
   // create a map with all 0s
   const map = Array(maxY + 1).fill(0).map(() => Array(maxX + 1).fill(0));
@@ -72,7 +66,7 @@ function run(input) {
         map[start.y][i] += 1;
       }
 
-    } else {
+    } else if (isVertical(line)) {
       if (start.y > end.y) {
         markStart = end.y;
         markEnd = start.y;
@@ -83,11 +77,18 @@ function run(input) {
 
       // console.log('vertical', start.x, markStart, markEnd);
       for (let i = markStart; i <= markEnd; i++) {
-        if (typeof map[i][start.x] === 'string') {
-          map[i][start.x] = 0;
-        }
         map[i][start.x] += 1;
         // console.log('it', i, map);
+      }
+
+    } else {
+      // diagonal
+
+      const xSign = start.x > end.x ? -1 : 1;
+      const ySign = start.y > end.y ? -1 : 1;
+      const distance = Math.abs(start.x - end.x); // diagonals at 45deg only
+      for (let i = 0; i <= distance; i++) {
+        map[ySign * i + start.y][xSign * i + start.x] += 1;
       }
     }
     // console.log(map);
