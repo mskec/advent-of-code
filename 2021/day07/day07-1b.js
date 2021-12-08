@@ -10,13 +10,19 @@ run(
 function run(input) {
   const crabs = input.split(',').map(c => +c); // convert to a number
 
-  const sum = crabs.reduce((agg, c) => agg + c, 0);
-  console.log(sum / crabs.length);
-
   crabs.sort((a, b) => a - b);
 
-  const median = crabs[Math.floor(crabs.length / 2)];
+  let position = 0;
+  let minFuel = Number.MAX_VALUE;
+  for (let i = crabs[0]; i < crabs[crabs.length - 1]; i++) {
+    const fuel = crabs.reduce((agg, crab, idx) => agg + Math.abs(crab - i), 0);
 
-  const fuel = crabs.reduce((agg, crab) => agg + Math.abs(crab - median), 0);
-  console.log({ median, fuel });
+    if (fuel < minFuel) {
+      minFuel = fuel;
+      position = i;
+    }
+  }
+
+  console.log('fuel:', minFuel);
+  console.log('position:', position);
 }
