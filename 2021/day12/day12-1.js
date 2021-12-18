@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 run(
-  fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim()
+  fs.readFileSync(path.join(__dirname, 'input1.sample.txt'), 'utf8').trim()
 );
 
 
