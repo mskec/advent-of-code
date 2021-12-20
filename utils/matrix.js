@@ -4,10 +4,7 @@ function createMatrix(rows, cols, initialValue) {
 }
 
 function createMatrixXYZ(x, y, z, initialValue) {
-  return Array(z).fill(0)
-    .map(() => Array(y).fill(0)
-      .map(() => Array(x).fill(initialValue))
-    );
+  return Array(z).fill(0).map(() => createMatrix(y, x, initialValue));
 }
 
 function countMatrixValues(matrix, value) {
