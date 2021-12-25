@@ -30,9 +30,14 @@ function copyMatrix(matrix) {
   return newMatrix;
 }
 
+function printMatrix(matrix) {
+  console.log(matrix.map(row => row.join('')).join('\n'));
+}
+
 module.exports = {
   createMatrix,
   createMatrixXYZ,
   countMatrixValues,
   copyMatrix,
+  printMatrix,
 };
